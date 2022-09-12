@@ -1,0 +1,8 @@
+populationSize = 30;numberOfGenes = 40;
+3 crossoverProbability = 0.8;
+4 mutationProbability = 0.025;
+5 tournamentSelectionParameter = 0.75;
+6 variableRange = 3.0;
+7 fitness = zeros(populationSize,1);
+8
+9 % population = InitializePopulation(populationSize, numberOfGenes);
