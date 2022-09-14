@@ -13,7 +13,7 @@ function x = DecodeChromosome(chromosome, numberOfVariables, maximumVariableValu
    % corresponding x.
    for i = 1:numberOfVariables
        for j=1:k
-           x(i) = x(i) + 2^(-j)*chromosome(j+(i-1)*k);
+           x(j) = x(j) + 2^(-j)*chromosome(j+(1-i)*k);
        end
    end
     
