@@ -1,17 +1,27 @@
 function x = DecodeChromosome(chromosome, numberOfVariables, maximumVariableValue)
 
+   % Initializing of variables
    m = length(chromosome);
    n = numberOfVariables;
    k = m/n;
-   
-   for j = 1:numberOfVariables
-       for i=1:k
-           x(j) = x(j)+(2^(-i)*chromosome(i+(j-1)*k));
+   d = maximumVariableValue;
+   x = zeros(1,n);
+    
+
+   % Loop over the total number of variables and then over each bit.
+   % Smart indexing gives us the correct slice of the chromsome to the
+   % corresponding x.
+   for i = 1:numberOfVariables
+       for j=1:k
+           x(j) = x + 2^(-j)*chromosome(j+(1-i)*k);
        end
    end
+    
+   % As in Eq.9 in the course book
+   x = -d + (2*d/(1-2^(-k)))*x;
    
-   x=x*(2*maximumVariableValue/(1-2^(-k)));
-   x = x - maximumVariableValue;
+
+  
    
 
 end

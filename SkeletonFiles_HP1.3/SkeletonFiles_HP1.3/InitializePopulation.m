@@ -1,7 +1,7 @@
-function population = InitializePopulation(populationSize,nGenes)
-population = zeros(populationSize, nGenes);
+function population = InitializePopulation(populationSize,numberOfGenes)
+population = zeros(populationSize, numberOfGenes);
     for i = 1:populationSize
-        for j = 1:nGenes
+        for j = 1:numberOfGenes
             s = rand;
             if (s < 0.5)
                 population(i,j)=0;

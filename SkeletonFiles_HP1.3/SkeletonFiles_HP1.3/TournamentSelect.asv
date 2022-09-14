@@ -8,6 +8,9 @@ function selectedIndividualIndex = TournamentSelect(fitnessList, pTournament, to
         individualIndex(i) = randi(length(fitnessList));
         individualFitness(i) = fitnessList(individualIndex(i));
     end
+    individualIndex    
+    individualFitness
+
 
     % Loop over the tournament size and select individual with highest
     % fitness. If r > pTournament the individual with highest fitness is
@@ -16,19 +19,19 @@ function selectedIndividualIndex = TournamentSelect(fitnessList, pTournament, to
 
     
     for j = 1:tournamentSize
-        r = rand;
+        r = rand
         if (r < pTournament)
-            [~,iTmp] = max(individualFitness);
-            selectedIndividualIndex = individualIndex(iTmp);
+            [~,iTmp] = max(individualFitness)
+            selectedIndividualIndex = individualIndex(iTmp)
             break
 
         elseif j == tournamentSize
-            [~,iTmp] = max(individualFitness);
-            selectedIndividualIndex = individualIndex(iTmp);
+            [~,iTmp] = max(individualFitness)
+            selectedIndividualIndex = individualIndex(iTmp)
         
         else
-            [~,iTmp] = max(individualFitness);
-            individualFitness(iTmp) = NaN;
+            [~,iTmp] = max(individualFitness)
+            individualFitness(iTmp) = NaN
         end
     end
         
