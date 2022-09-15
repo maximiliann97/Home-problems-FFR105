@@ -40,7 +40,7 @@ mutationProbabilityGreater = linspace(0.02, 1, 10);
 maximumFitnessListLargePmut = zeros(numberOfRuns,length(mutationProbabilityGreater));
 
 
-for j = 1:length(mutationProbabilityGreater)
+for j = 1:length(mutationProbabilityLesser)
     sprintf('Mutation rate = %0.5f', mutationProbabilityGreater(j))
     for i = 1:numberOfRuns 
      [maximumFitness, bestVariableValues]  = RunFunctionOptimization(populationSize, numberOfGenes, numberOfVariables, maximumVariableValue, tournamentSize, ...
@@ -60,28 +60,21 @@ end
 averageSmallPmut = mean(maximumFitnessListSmallPmut);
 medianSmallPmut = median(maximumFitnessListSmallPmut);
 stdSmallPmut = sqrt(var(maximumFitnessListSmallPmut));
-sprintf('PMut: %0.10f: Median: %0.10f, Average: %0.10f, STD: %0.10f', mutationProbabilityLesser, averageSmallPmut, medianSmallPmut, stdSmallPmut)
+sprintf('PMut <= %0.10f: Median: %0.10f, Average: %0.10f, STD: %0.10f', mutationProbabilityLesser, averageSmallPmut, medianSmallPmut, stdSmallPmut)
 
-
-subplot(1,2,1)
-plot(mutationProbabilityLesser, medianSmallPmut,'r')
-xlabel('Pmut')
-ylabel('Median fitness score')
-title(' 0 <= Pmut <= 0.2')
-hold on
 
 
 % ... and here (pMut > 0.02)
 averageLargePmut = mean(maximumFitnessListLargePmut);
 medianLargePmut = median(maximumFitnessListLargePmut);
 stdLargePmut = sqrt(var(maximumFitnessListLargePmut));
-sprintf('PMut: %0.10f: Median: %0.10f, Average: %0.10f, STD: %0.10f', mutationProbabilityGreater, averageLargePmut, medianLargePmut, stdLargePmut)
+sprintf('PMut > %0.10f: Median: %0.10f, Average: %0.10f, STD: %0.10f', mutationProbabilityGreater, averageLargePmut, medianLargePmut, stdLargePmut)
 
 
-subplot(1,2,2)
-plot(mutationProbabilityGreater, medianLargePmut,'b')
+plot(mutationProbabilityLesser, medianSmallPmut)
+hold on
+plot(mutationProbabilityGreater, medianLargePmut)
 xlabel('Pmut')
 ylabel('Median fitness score')
-title(' 0.2 <= Pmut <= 1')
-
-
+ylim([min(medianLargePmut)-0.1 max(medianSmallPmut)+1])
+xlim([min(mutationProbabilityLesser)-0.1 max(medianSmallPmut)+1])
