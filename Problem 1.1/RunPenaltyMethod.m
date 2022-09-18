@@ -12,7 +12,6 @@
 % The values below are suggestions - you may experiment with
 % other values of eta and other (increasing) sequences of the
 % µ parameter (muValues).
-clear all;close all;clc
 
 
 muValues = [1 10 100 1000 1100];

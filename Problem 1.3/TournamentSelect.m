@@ -1,4 +1,4 @@
-function selectedIndividualIndex = TournamentSelect(fitnessList, pTournament, tournamentSize)
+function selectedIndividualIndex = TournamentSelect(fitnessList, tournamentProbability, tournamentSize)
 
     individualFitness = zeros(1,tournamentSize);
     individualIndex = zeros(1,tournamentSize);
@@ -17,7 +17,7 @@ function selectedIndividualIndex = TournamentSelect(fitnessList, pTournament, to
     
     for j = 1:tournamentSize
         r = rand;
-        if (r < pTournament)
+        if (r < tournamentProbability)
             [~,iTmp] = max(individualFitness);
             selectedIndividualIndex = individualIndex(iTmp);
             break
