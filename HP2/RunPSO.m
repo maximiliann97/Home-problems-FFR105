@@ -13,7 +13,7 @@ rangeY = linspace(-5,5);
 [X,Y] = meshgrid(rangeX,rangeY);
 a = 0.01;
 f = log(a+(X.^2 + Y-11).^2 + (X+Y.^2-7).^2);
-contour(X,Y,f)
+contour(X,Y,f,'Showtext','on')
 xlabel('x')
 ylabel('y')
 
@@ -100,5 +100,5 @@ end
 
 fprintf('Best position\n');
 fprintf(' %4.15f\t',bestPerformance);
-fprintf('\nFunction value for best position\n');
+fprintf('\nFunction value of best position\n');
 fprintf(' %4.30f\n',globalBestValue);
