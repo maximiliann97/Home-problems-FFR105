@@ -1,6 +1,6 @@
 %Particle Swarm Optimization (PSO)
 %Maximilian Salén 970105-1576
-%2022-09-28
+%Last updated: 2022-09-28
 clear all
 close all
 clc
@@ -101,4 +101,4 @@ end
 fprintf('Best position\n');
 fprintf(' %4.15f\t',bestPerformance);
 fprintf('\nFunction value of best position\n');
-fprintf(' %4.30f\n',globalBestValue);
+fprintf(' %d\n',globalBestValue);
