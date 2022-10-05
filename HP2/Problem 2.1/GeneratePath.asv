@@ -1,0 +1,15 @@
+function path = GeneratePath(pheromoneLevel, visibility, alpha, beta)
+
+    numberOfCities = length(visibility);
+    startingNode = randi(numberOfCities);
+    currentNode = round(rand*(numberOfCities-1) + 1);
+    path = zeros(1,numberOfCities+1);
+    tabuList(1) = startingNode;
+    path(1) = startingNode;
+    for i = 1:numberOfCities
+        nextNode = GetNode(tabuList,pheromoneLevel,visibility,alpha,beta);
+        path(end+1) = nextNode;
+        tabuList(end+1) = nextNode;
+    end
+end
+

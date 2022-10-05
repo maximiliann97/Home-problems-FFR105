@@ -17,4 +17,3 @@ pheromoneLevel = InitializePheromoneLevels(numberOfCities, tau0); % To do: Write
 visibility = GetVisibility(cityLocation);  
 
 path = GeneratePath(pheromoneLevel,visibility,alpha,beta);
-path(end+1) = path(1);
