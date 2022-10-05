@@ -4,14 +4,13 @@ function nextNode = GetNode(tabuList,pheromoneLevel,visibility,alpha,beta)
     probabilities = zeros(1,numberOfCities);
 
     for i = 1:numberOfCities
-        if ~ismember(i,tabuList)
+        if ismember(i,tabuList)
+            probabilities(i) = 0;
+        else
             probabilities(i) = StepProbability(pheromoneLevel,visibility,tabuList,alpha,beta,...
                 startNode,i);
-        else
-            probabilities(i) = 0;
         end
     end
-    probabilities
     [~,nextNode] = max(probabilities);
 end
 
