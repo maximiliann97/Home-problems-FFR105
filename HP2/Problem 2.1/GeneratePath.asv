@@ -1,9 +1,0 @@
-function path = GeneratePath(pheromoneLevel, visibility, alpha, beta)
-    numberOfCities = length(visibility);
-    startNode = randi(numberOfCities);
-    tabuList(1) = startNode;
-    path(1) = startNode;
-    for i = 1:numberOfCities
-        nex
-end
-
