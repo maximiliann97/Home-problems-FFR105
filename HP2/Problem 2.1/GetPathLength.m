@@ -11,9 +11,9 @@ function pathLength = GetPathLength(path,cityLocation)
 
     % Add distance from end node to start node to complete the path
     firstNode = path(1);
-    lastNode = path(end);
-    xDistance = cityLocation(lastNode,1) - cityLocation(firstNode,1);
-    yDistance = cityLocation(lastNode,2) - cityLocation(firstNode,2);
+    finalNode = path(end);
+    xDistance = cityLocation(finalNode,1) - cityLocation(firstNode,1);
+    yDistance = cityLocation(finalNode,2) - cityLocation(firstNode,2);
     distance = sqrt(xDistance^2+yDistance^2);
     pathLength = pathLength + distance;
     

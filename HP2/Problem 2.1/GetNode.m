@@ -1,7 +1,7 @@
 function nextNode = GetNode(tabuList,pheromoneLevel,visibility,alpha,beta,startingNode)
 
     numberOfCities = length(visibility);
-    r = rand(); %Draw a randomNumber for RWS
+    r = rand; %Draw a randomNumber for RWS
     probabilitySum = 0;
 
     for i = 1:numberOfCities
@@ -17,7 +17,5 @@ function nextNode = GetNode(tabuList,pheromoneLevel,visibility,alpha,beta,starti
            break
         end
     end
-    
-
 end
 

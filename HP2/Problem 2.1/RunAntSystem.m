@@ -32,8 +32,8 @@ targetPathLength = 99.9999999;
 range = [0 20 0 20];
 tspFigure = InitializeTspPlot(cityLocation, range);
 connection = InitializeConnections(cityLocation);
-pheromoneLevel = InitializePheromoneLevels(numberOfCities, tau0); % To do: Write the InitializePheromoneLevels
-visibility = GetVisibility(cityLocation);                         % To do: write the GetVisibility function
+pheromoneLevel = InitializePheromoneLevels(numberOfCities, tau0);
+visibility = GetVisibility(cityLocation);                         
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Main loop
@@ -52,12 +52,13 @@ while (minimumPathLength > targetPathLength)
  %%%%%%%%%%%%%%%%%%%%%%%%%%
 
  for k = 1:numberOfAnts
-  path = GeneratePath(pheromoneLevel, visibility, alpha, beta);   % To do: Write the GeneratePath function
-  pathLength = GetPathLength(path,cityLocation);                  % To do: Write the GetPathLength function
+  path = GeneratePath(pheromoneLevel, visibility, alpha, beta);
+  pathLength = GetPathLength(path,cityLocation);                  
   if (pathLength < minimumPathLength)
     minimumPathLength = pathLength;
     disp(sprintf('Iteration %d, ant %d: path length = %.5f',iIteration,k,minimumPathLength));
     PlotPath(connection,cityLocation,path);
+    bestPath = path;
   end
   pathCollection(k,:) = path;  
   pathLengthCollection(k) = pathLength; 
@@ -71,6 +72,8 @@ while (minimumPathLength > targetPathLength)
  pheromoneLevel = UpdatePheromoneLevels(pheromoneLevel,deltaPheromoneLevel,rho);          % To do: write the UpdatePheromoneLevels function
 
 end
+
+
 
 
 
