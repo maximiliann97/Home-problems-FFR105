@@ -7,7 +7,7 @@ function stepProbability = StepProbability(pheromoneLevel,visibility,tabuList,al
         if ismember(i,tabuList)
             continue
         else
-            denominator = denominator + (pheromoneLevel(i,startNode)^alpha * visibility(i,startNode)^beta);
+            denominator = denominator + (pheromoneLevel(startNode,i)^alpha * visibility(startNode,i)^beta);
         end
     end
     

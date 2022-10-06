@@ -8,11 +8,12 @@ function deltaPheromoneLevel = ComputeDeltaPheromoneLevels(pathCollection,pathLe
         path = pathCollection(k,:);
         pathLength = pathLengthCollection(k);
 
-        for iCity = 1:numberOfCities-1
+        for iCity = 1:(length(path)-1)
             iNode = path(iCity);
             jNode = path(iCity+1);
             deltaPheromoneLevel(iNode,jNode) = deltaPheromoneLevel(iNode,jNode) + 1/pathLength;
         end
+        
         % Pheromone for edge from final node to first node
         finalNode = path(end);
         firstNode = path(1);

@@ -12,7 +12,7 @@ function nextNode = GetNode(tabuList,pheromoneLevel,visibility,alpha,beta,starti
         end
         probabilitySum = probabilitySum + probability;
         
-        if probabilitySum > r
+        if probabilitySum >= r
            nextNode = i;
            break
         end

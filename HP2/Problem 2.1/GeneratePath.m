@@ -1,5 +1,4 @@
 function path = GeneratePath(pheromoneLevel, visibility, alpha, beta)
-
     numberOfCities = length(visibility);
 
     % Select Starting node randomly
