@@ -1,7 +1,7 @@
 function visibility = GetVisibility(cityLocation)
 
     numberOfCities = length(cityLocation);
-    visibility = zeros(numberOfCities,numberOfCities);
+    visibility = zeros(numberOfCities);
     
     for i = 1:numberOfCities
         for j = 1:numberOfCities
