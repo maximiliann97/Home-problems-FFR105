@@ -25,7 +25,7 @@ beta = 3.5;         %% Changes allowed
 rho = 0.5;          %% Changes allowed
 tau0 = 0.2;         %% Changes allowed
 
-targetPathLength = 98; 
+targetPathLength = 98.75; 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initialization
