@@ -7,7 +7,7 @@ variableRegisters = zeros(1,M);
 constantRegisters = [1 3 10];
 N = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
-instructionRange  = [10 50];
+instructionRange  = [10 100];
 cMax = 4*200;
 
 tournamentSize = 5;

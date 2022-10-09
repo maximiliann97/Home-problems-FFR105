@@ -1,4 +1,4 @@
-function output = Instructions(instructions,registers,operatorSet)
+function output = DecodeInstructions(instructions,registers,operatorSet)
     nInstructions = length(instructions) / 4;
 
     for i = 1:nInstructions
@@ -16,13 +16,13 @@ function output = Instructions(instructions,registers,operatorSet)
        elseif operator == '*'
            result = operandOne * operandTwo;
        else
-           if operantTwo ~= 0
+           if operandTwo ~= 0
                result = operandOne / operandTwo;
            else
                result = 1e15;
            end
        end
-       
+       output(destinationRegister) = result;
     end
 end
 
