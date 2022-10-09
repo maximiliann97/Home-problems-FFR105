@@ -30,11 +30,11 @@ fData = LoadFunctionData();
 
 for generation = 1:numberOfGenerations
     maximumFitness  = 0.0;
-    
-    
+    fitnessList = zeros(1, populationSize);
     %% Evaluate
     for i = 1:populationSize
-        
+        chromosome = population(i).Chromosome;
+        fitnessList(i) = EvaluateIndividual(chromosome,fData,operatorSet,registers,M);
     end
 
 

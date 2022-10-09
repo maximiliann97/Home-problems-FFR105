@@ -1,9 +1,0 @@
-function estimateFunction = EvaluateFunction(chromosome,operatorSet,nVariableRegisters)
-    nZeroVariableRegisters = nVarialeRegisters - 1;
-    zeroVariableRegisters = zeros(1,nZeroVariableRegisters);
-    registers
-
-    
-
-end
-
