@@ -1,7 +1,8 @@
-function newPopulation = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, nVariableRegisters, nConstantRegisters, crossoverProbability)
+function newPopulation = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, nVariableRegisters, nConstantRegisters, operatorSet,crossoverProbability,mutationConstant)
     newPopulation = [];
     populationSize = size(population,2);
-    
+    decayRate = 0.9999;
+
     % Select two individual for tournament selection
     for i = 1:2:populationSize
         i1 = TournamentSelection(fitnessList,tournamentProbability,tournamentSize);
@@ -17,16 +18,20 @@ function newPopulation = NextGeneration(population, fitnessList, tournamentProba
              offspring1 = parent1;
              offspring2 = parent2;
         end
-    end
     
-   % Mutate
-   offspring1 = Mutate(offspring1,mutationProbability,operatorSet,nVariableRegisters,nConstantRegisters);
-   offspring2 = Mutate(offspring2,mutationProbability,operatorSet,nVariableRegisters,nConstantRegisters);
-
-   % Reformat to structs
-   newIndividual1 = struct('Chromosome', offspring1);
-   newIndividual2 = struct('Chromosome', offspring2);
-
-   newPopulation = [newPopulation newIndividual1 i]
+    
+       % Mutate
+       mutationProbability = mutationConstant * decayRate / length(offspring1);
+       offspring1 = Mutate(offspring1,mutationProbability,operatorSet,nVariableRegisters,nConstantRegisters);
+       mutationProbability = mutationConstant * decayRate / length(offspring2);
+       offspring2 = Mutate(offspring2,operatorSet,nVariableRegisters,nConstantRegisters);
+    
+       % Reformat to structs
+       newIndividual1 = struct('Chromosome', offspring1);
+       newIndividual2 = struct('Chromosome', offspring2);
+        
+       % Next generation
+       newPopulation = [newPopulation newIndividual1 newIndividual2];
+   end
 end
 

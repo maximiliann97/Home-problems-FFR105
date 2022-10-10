@@ -1,7 +1,6 @@
 function fitness = EvaluateIndividual(chromosome,fData,operatorSet,registers,nVariableRegisters,mMax)
     K = height(fData);
-    yEstimate = zeros(K,1);
-
+    errorSum = 0;
     for k = 1:K
         registers(1) = fData(k,1);
         for j = 2:nVariableRegisters
@@ -9,14 +8,16 @@ function fitness = EvaluateIndividual(chromosome,fData,operatorSet,registers,nVa
         end
 
         output = DecodeInstructions(chromosome,registers,operatorSet);
-        yEstimate(k) = output(1);
+        yEstimate = output(1);
+        errorSum = errorSum + (yEstimate - fData(k,2))^2;
     end
-    error = sqrt(1/K * sum((yEstimate-fData(:,2)).^2));
+    
+    error = sqrt(errorSum/K);
     fitness = 1/error;
     
     % Penalty factor
     if length(chromosome) > mMax
-        fitness = fitness*0.75;
+        fitness = fitness*0.9;
     end
 
 end

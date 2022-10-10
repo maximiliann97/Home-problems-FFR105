@@ -7,11 +7,11 @@ clc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Parameter specifications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-populationSize = 100;
-M = 3; % number of variable registers
+populationSize = 200;
+M = 5; % number of variable registers
 variableRegisters = zeros(1,M);
-constantRegisters = [-1 3 -7 11];
-mMax = 450; %Included later!!!!!
+constantRegisters = [1 3 -1 -5 10];
+mMax = 450;
 N = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
 instructionRange  = [10 100];
@@ -20,7 +20,7 @@ tournamentSize = 5;
 tournamentProbability = 0.75;
 crossoverProbability = 0.2;
 mutationProbability = 0.04;
-numberOfGenerations = 1000;
+numberOfGenerations = 20000;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initialization
@@ -52,21 +52,19 @@ for generation = 1:numberOfGenerations
         if goatFitness < fitnessList(i)
             goatIndividual = population(i);
             goatFitness = fitnessList(i);
+            fprintf('Best fitness so far %.4f Generation %.f\n', goatFitness, generation)
         end
 
     end
 
     %Form the next generation
     population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, M, N, operatorSet, crossoverProbability, mutationProbability);
-
+    
+    % Save elite individual as first in next generation
     population(1) = eliteIndividual;
     
 
 end
-
-
-
-
 
 
 

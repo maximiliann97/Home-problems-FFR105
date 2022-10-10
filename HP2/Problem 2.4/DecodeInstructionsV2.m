@@ -1,6 +1,6 @@
-function registers = DecodeInstructions(instructions,registers,operatorSet)
+function registers = DecodeInstructionsV2(instructions,registers,operatorSet)
     nInstructions = length(instructions) / 4;
-    cMax = 1e15;
+
     for i = 1:nInstructions
         instructionIndex = 1 + (i-1)*4;
         
@@ -10,20 +10,18 @@ function registers = DecodeInstructions(instructions,registers,operatorSet)
         operandTwo = registers(instructions(instructionIndex+3));
         result = registers(destinationRegister);
 
-
-       switch operator
-           case '+'
-               result = operandOne + operandTwo;
-           case '-'
-               result = operandOne - operandTwo;
-           case '*'
-               result = operandOne * operandTwo;
-           case '/'
-               if operandTwo ~= 0
-                   result = operandOne / operandTwo;
-               else
-                   result = cMax;
-               end
+       if operator == '+'
+           result = operandOne + operandTwo;
+       elseif operator == '-'
+           result = operandOne - operandTwo;
+       elseif operator == '*'
+           result = operandOne * operandTwo;
+       else
+           if operandTwo ~= 0
+               result = operandOne / operandTwo;
+           else
+               result = 1e15;
+           end
        end
        registers(destinationRegister) = result;
     end
