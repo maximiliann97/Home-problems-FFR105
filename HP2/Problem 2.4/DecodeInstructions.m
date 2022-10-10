@@ -3,6 +3,7 @@ function output = DecodeInstructions(instructions,registers,operatorSet)
 
     for i = 1:nInstructions
         instructionIndex = 1 + (i-1)*4;
+        
         operator = operatorSet(instructions(instructionIndex));
         destinationRegister = instructions(instructionIndex+1);
         operandOne = registers(instructions(instructionIndex+2));

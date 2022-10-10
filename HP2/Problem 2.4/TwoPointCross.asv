@@ -1,10 +1,8 @@
 function [newIndividual1, newIndividual2] = TwoPointCross(individual1,individual2)
-    % Get lengths of individuals
+
     nGenes1 = length(individual1);
     nGenes2 = length(individual2);
-
-    
-    % Crossover points for individual 1
+   
     i1CrossoverPoints = -1;
     index = 1;
     while true
@@ -15,14 +13,12 @@ function [newIndividual1, newIndividual2] = TwoPointCross(individual1,individual
             index = index + 1;
         end
 
-        if length(unique(i1CrossoverPoints)) == 2 % When 2 unique crossover points is obtained break
+        if length(unique(i1CrossoverPoints)) == 2 % When unique crossover points is obtained break
             break
         end
     end
     i1CrossoverPoints = sort(i1CrossoverPoints); % Sort crossover points
 
-
-    % Crossover points for individual 2
     i2CrossoverPoints = -1;
     index = 1;
     while true
@@ -40,16 +36,16 @@ function [newIndividual1, newIndividual2] = TwoPointCross(individual1,individual
     i2CrossoverPoints = sort(i2CrossoverPoints);
 
 
-    % Two-point crossover
     i1SliceOne= individual1(1:i1CrossoverPoints(1));
-    i2SliceOne = individual2(1:i2CrossoverPoints(1));
+    i2SliceOne = individual2(1:i2CrossoverPoints(2));
 
-    i1SliceTwo = individual1(i1CrossoverPoints(1)+1:i1CrossoverPoints(2));
-    i2SliceTwo = individual2(i2CrossoverPoints(1)+1:i2CrossoverPoints(2));
+    i1SliceTwo = individual1(crossoverPoint1:crossoverPoint2);
+    i2SliceTwo = individual2(crossoverPoint1+1:crossoverPoint2);
 
-    i1SliceThree = individual1(i1CrossoverPoints(2)+1:end);
-    i2SliceThree = individual2(i2CrossoverPoints(2)+1:end);
+    i1SliceThree = individual1(crossoverPoint2+1:end);
+    i2SliceThree = individual2(crossoverPoint2+1:end);
 
+    
     newIndividual1 = [i1SliceOne i2SliceTwo i1SliceThree];
     newIndividual2 = [i2SliceOne i1SliceTwo i2SliceThree];
 end

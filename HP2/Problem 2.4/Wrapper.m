@@ -4,11 +4,10 @@ clc
 populationSize = 100;
 M = 3; % number of variable registers
 variableRegisters = zeros(1,M);
-constantRegisters = [1 3 10];
+constantRegisters = [-1 3 7];
 N = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
 instructionRange  = [10 50];
-cMax = 4*200;
 
 tournamentSize = 5;
 tournamentProbabiliy = 0.75;
@@ -24,5 +23,8 @@ fData = LoadFunctionData();
 
 
 population = InitializePopulation(populationSize,instructionRange,M,N,operatorSet);
-chromosome = population(1).Chromosome;
-fitness = EvaluateIndividual(chromosome,fData,operatorSet,registers,M,cMax);
+chromosome1 = population(1).Chromosome;
+chromosome2 = population(2).Chromosome;
+%fitness = EvaluateIndividual(chromosome,fData,operatorSet,registers,M);
+
+[newIndividual1, newIndividual2] = TwoPointCross(chromosome1,chromosome2);
