@@ -1,9 +1,8 @@
 function [newIndividual1, newIndividual2] = TwoPointCross(individual1,individual2)
-    % Get lengths of individuals
     nGenes1 = length(individual1);
     nGenes2 = length(individual2);
 
-    
+
     % Crossover points for individual 1
     i1CrossoverPoints = -1;
     index = 1;

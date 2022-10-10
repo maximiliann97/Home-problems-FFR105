@@ -13,7 +13,7 @@ tournamentSize = 5;
 tournamentProbabiliy = 0.75;
 crossoverProbability = 0.2;
 mutationProbability = 0.04;
-numberOfGenerations = 2000;
+numberOfGenerations = 1000;
 
 
 registers = [variableRegisters constantRegisters];
@@ -23,8 +23,9 @@ fData = LoadFunctionData();
 
 
 population = InitializePopulation(populationSize,instructionRange,M,N,operatorSet);
+chromosome = population(1).Chromosome;
 chromosome1 = population(1).Chromosome;
 chromosome2 = population(2).Chromosome;
-%fitness = EvaluateIndividual(chromosome,fData,operatorSet,registers,M);
+fitness = EvaluateIndividual(chromosome,fData,operatorSet,registers,M);
 
-[newIndividual1, newIndividual2] = TwoPointCross(chromosome1,chromosome2);
+%[newIndividual1, newIndividual2] = TwoPointCross(chromosome1,chromosome2);

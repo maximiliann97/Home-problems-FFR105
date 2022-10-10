@@ -1,12 +1,11 @@
 %Maximilian Salén
 %19970105-1576
-%Last updated: 2022-10-08
+%Last updated: 2022-10-10
 clear all
 clc
-addpath .\StructExample
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Parameter specifications and initialization
+% Parameter specifications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 populationSize = 100;
 M = 3; % number of variable registers
@@ -21,54 +20,48 @@ tournamentSize = 5;
 tournamentProbability = 0.75;
 crossoverProbability = 0.2;
 mutationProbability = 0.04;
-numberOfGenerations = 1; %Change later
+numberOfGenerations = 1000;
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Initialization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 registers = [variableRegisters constantRegisters];
 population = InitializePopulation(populationSize,instructionRange,M,N,operatorSet);
+goatIndividual = struct('Chromosome', []);
+goatFitness = 0; %goat = greatest of all time
 fData = LoadFunctionData();
 
 
 for generation = 1:numberOfGenerations
-    maximumFitness  = 0.0;
     fitnessList = zeros(1, populationSize);
+    eliteFitness  = 0;
+    eliteIndividual = struct('Chromosome', []);
+
     % Evaluate
     for i = 1:populationSize
         chromosome = population(i).Chromosome;
-        fitnessList(i) = EvaluateIndividual(chromosome,fData,operatorSet,registers,M);
-        if maximumFitness < fitnessList(i)
-            maximumFitness = fitnessList(i);
-            iBestIndividual = i;
-          %  bestVariableValues = variableValues;
-        end
-    end
-    
-    % Tournament selection
-    tempPopulation = population;
-    for i = 1:2:populationSize
-        i1 = TournamentSelection(fitnessList,tournamentProbability,tournamentSize);
-        i2 = TournamentSelection(fitnessList,tournamentProbability,tournamentSize);
-        r = 0;
-    % Two-point Crossover
-    if (r < crossoverProbability) 
-         individual1 = population(i1).Chromosome;
-         individual2 = population(i2).Chromosome;
-         [newIndividual1, newIndividual2] = TwoPointCross(individual1, individual2);
-         temporaryPopulation(i,:) = newIndividualPair(1,:);
-         temporaryPopulation(i+1,:) = newIndividualPair(2,:);
-    else
-         temporaryPopulation(i,:) = population(i1,:);
-         temporaryPopulation(i+1,:) = population(i2,:);     
-    end
-   end
+        fitnessList(i) = EvaluateIndividual(chromosome,fData,operatorSet,registers,M,mMax);
 
-   % Mutation
-%    temporaryPopulation(1,:) = population(iBestIndividual,:);
-%    for i = 2:populationSize
-%      tempIndividual = Mutate(temporaryPopulation(i,:),mutationProbability);
-%      temporaryPopulation(i,:) = tempIndividual;
-%    end
-%    population = temporaryPopulation;
+        % Save the elite of this generation
+        if eliteFitness < fitnessList(i)
+            eliteIndividual = population(i);
+            eliteFitness = fitnessList(i);
+        end
+
+        % Save the greatest of all time
+        if goatFitness < fitnessList(i)
+            goatIndividual = population(i);
+            goatFitness = fitnessList(i);
+        end
+
+    end
+
+    %Form the next generation
+    population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, nVariableRegisters, nConstantRegisters, crossoverProbability);
+
+    population(1) = eliteIndividual;
+    
+
 end
 
 
