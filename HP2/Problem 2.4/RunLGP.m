@@ -14,7 +14,7 @@ constantRegisters = [-1 3 -7 11];
 mMax = 450; %Included later!!!!!
 N = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
-instructionRange  = [10 50];
+instructionRange  = [10 100];
 
 tournamentSize = 5;
 tournamentProbability = 0.75;
@@ -57,7 +57,7 @@ for generation = 1:numberOfGenerations
     end
 
     %Form the next generation
-    population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, nVariableRegisters, nConstantRegisters, crossoverProbability);
+    population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, M, N, operatorSet, crossoverProbability, mutationProbability);
 
     population(1) = eliteIndividual;
     

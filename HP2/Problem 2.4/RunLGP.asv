@@ -5,7 +5,7 @@ clear all
 clc
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Parameter specifications and initialization
+% Parameter specifications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 populationSize = 100;
 M = 3; % number of variable registers
@@ -22,35 +22,44 @@ crossoverProbability = 0.2;
 mutationProbability = 0.04;
 numberOfGenerations = 1000;
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Initialization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 registers = [variableRegisters constantRegisters];
 population = InitializePopulation(populationSize,instructionRange,M,N,operatorSet);
-bestIndividual = struct('Chromosome', []);
+goatIndividual = struct('Chromosome', []);
+goatFitness = 0; %goat = greatest of all time
 fData = LoadFunctionData();
 
 
 for generation = 1:numberOfGenerations
-    maximumFitness  = 0.0;
     fitnessList = zeros(1, populationSize);
+    eliteFitness  = 0;
     eliteIndividual = struct('Chromosome', []);
-    
+
     % Evaluate
     for i = 1:populationSize
         chromosome = population(i).Chromosome;
         fitnessList(i) = EvaluateIndividual(chromosome,fData,operatorSet,registers,M,mMax);
 
-
-        if maximumFitness < fitnessList(i)
-            maximumFitness = fitnessList(i);
-            iBestIndividual = i;
-            bestFitness = fitnessList(i);
+        % Save the elite of this generation
+        if eliteFitness < fitnessList(i)
+            eliteIndividual = population(i);
+            eliteFitness = fitnessList(i);
         end
+
+        % Save the greatest of all time
+        if goatFitness < fitnessList(i)
+            goatIndividual = population(i);
+            goatFitness = fitnessList(i);
+        end
+
     end
 
     %Form the next generation
-    population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, nVariableRegisters, nConstantRegisters, crossoverProbability);
+    population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, M, N, operatorSet, crossoverProbability, mutationProbability);
 
-    population(1) = elite;
+    population(1) = eliteIndividual;
     
 
 end

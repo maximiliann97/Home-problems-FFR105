@@ -1,7 +1,8 @@
 function newPopulation = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, nVariableRegisters, nConstantRegisters, crossoverProbability)
     newPopulation = [];
     populationSize = size(population,2);
-
+    
+    % Select two individual for tournament selection
     for i = 1:2:populationSize
         i1 = TournamentSelection(fitnessList,tournamentProbability,tournamentSize);
         i2 = TournamentSelection(fitnessList,tournamentProbability,tournamentSize);
@@ -11,19 +12,21 @@ function newPopulation = NextGeneration(population, fitnessList, tournamentProba
         parent1 = population(i1).Chromosome;
         parent2 = population(i2).Chromosome;
         if (r < crossoverProbability) 
-             [newIndividual1, newIndividual2] = TwoPointCross(parent1, parent2);
+             [offspring1, offspring2] = TwoPointCross(parent1, parent2);
         else
-             newIndividual1 = parent1;
-             newIndividual2 = parent2;
+             offspring1 = parent1;
+             offspring2 = parent2;
         end
     end
+    
+   % Mutate
+   offspring1 = Mutate(offspring1,mutationProbability,operatorSet,nVariableRegisters,nConstantRegisters);
+   offspring2 = Mutate(offspring2,mutationProbability,operatorSet,nVariableRegisters,nConstantRegisters);
 
-   % Mutation
-   tempPopulation(1).Chromosome = population(iBestIndividual).Chromosome;
-   for i = 2:populationSize
-     tempIndividual = Mutate(tempPopulation(i).Chromosome,mutationProbability,operatorSet,nVariableRegisters,nConstantRegisters);
-     tempPopulation(i).Chromosome = tempIndividual;
-   end
-   population = tempPopulation;
+   % Reformat to structs
+   newIndividual1 = struct('Chromosome', offspring1);
+   newIndividual2 = struct('Chromosome', offspring2);
+
+   newPopulation = [newPopulation newIndividual1 i]
 end
 
