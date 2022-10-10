@@ -19,7 +19,8 @@ instructionRange  = [10 100];
 tournamentSize = 5;
 tournamentProbability = 0.75;
 crossoverProbability = 0.2;
-mutationProbability = 0.04;
+mutationConstant = 3;
+mutationDecayRate = 0.9999;
 numberOfGenerations = 20000;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -30,9 +31,10 @@ population = InitializePopulation(populationSize,instructionRange,M,N,operatorSe
 goatIndividual = struct('Chromosome', []);
 goatFitness = 0; %goat = greatest of all time
 fData = LoadFunctionData();
+generation = 0;
 
-
-for generation = 1:numberOfGenerations
+while goatFitness < 100
+    generation = generation + 1;
     fitnessList = zeros(1, populationSize);
     eliteFitness  = 0;
     eliteIndividual = struct('Chromosome', []);
@@ -44,7 +46,7 @@ for generation = 1:numberOfGenerations
 
         % Save the elite of this generation
         if eliteFitness < fitnessList(i)
-            eliteIndividual = population(i);
+            eliteIndividual = population(i).Chromosome;
             eliteFitness = fitnessList(i);
         end
 
@@ -52,18 +54,21 @@ for generation = 1:numberOfGenerations
         if goatFitness < fitnessList(i)
             goatIndividual = population(i);
             goatFitness = fitnessList(i);
+            bestChromosome = population(i).Chromosome;
             fprintf('Best fitness so far %.4f Generation %.f\n', goatFitness, generation)
         end
 
+
     end
-
+    
     %Form the next generation
-    population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, M, N, operatorSet, crossoverProbability, mutationProbability);
-    
-    % Save elite individual as first in next generation
-    population(1) = eliteIndividual;
-    
+    mutationConstant = mutationConstant*mutationDecayRate;
+    population = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, M, N, operatorSet, crossoverProbability, mutationConstant,eliteIndividual);
 
+    % Save elite individual as first in next generation
+    %population(1) = eliteIndividual;
+    
+ 
 end
 
 

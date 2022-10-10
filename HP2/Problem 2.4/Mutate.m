@@ -1,9 +1,10 @@
-function mutatedIndividual = Mutate(individual,mutationProbability,operatorSet, nVariableRegisters, nConstantRegisters)
+function mutatedIndividual = Mutate(individual,mutationConstant,operatorSet, nVariableRegisters, nConstantRegisters)
     nGenes = length(individual);
     nRegisters = nVariableRegisters+nConstantRegisters;
     mutatedIndividual = individual;
     nOperator = length(operatorSet);
-    mutationProbability = 3/nGenes;
+    mutationProbability = mutationConstant/nGenes;
+    
     for i = 1:nGenes/4
         iMutate = 1 + (i-1)*4;
 
