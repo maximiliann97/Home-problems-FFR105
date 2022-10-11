@@ -18,4 +18,3 @@ function nextNode = GetNode(tabuList,pheromoneLevel,visibility,alpha,beta,starti
         end
     end
 end
-
