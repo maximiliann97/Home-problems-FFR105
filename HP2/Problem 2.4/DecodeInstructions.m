@@ -1,6 +1,5 @@
-function registers = DecodeInstructions(instructions,registers,operatorSet)
+function registers = DecodeInstructions(instructions,registers,operatorSet,cMax)
     nInstructions = length(instructions) / 4;
-    cMax = 1e15;
     for i = 1:nInstructions
         instructionIndex = 1 + (i-1)*4;
         

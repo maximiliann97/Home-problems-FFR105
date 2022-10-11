@@ -1,0 +1,13 @@
+function estimatedFunction = CalculateEstimatedFunction(individual, operatorSet, registers)
+    nGenes = length(inidividual);::
+
+    syms x
+    symbolicRegisters = subs(registers,registers(1),x);
+    symbolicRegisters(2:5) = 0;
+    
+    for i = 1:4:nGenes
+        operator = operatorSet(chromosome(i));
+        destinationRegister = chromosome(i+1);
+        operand1 = symb
+end
+
