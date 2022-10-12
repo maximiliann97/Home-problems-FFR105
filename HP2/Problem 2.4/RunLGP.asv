@@ -10,17 +10,13 @@ BestChromosomee
 populationSize = 200;
 nVariableRegisters = 5; % number of variable registers
 variableRegisters = zeros(1,nVariableRegisters);
-constantRegisters = [1 3 -1 -5 10];
-pentaltyThresholdLength = 4*135;
+constantRegisters = [1 3 -1];
+pentaltyThresholdLength = 4*150;
 penaltyFactor = 0.9;
 cMax = 1e15;
 nConstantRegisters = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
-<<<<<<< HEAD
-instructionRange  = [10 90];
-=======
-instructionRange  = [10 110];
->>>>>>> 044015c7b181ca2bbf0157c0123bc609a30b1e2b
+instructionRange  = [10 100];
 
 tournamentSize = 6;
 tournamentProbability = 0.8;
@@ -40,8 +36,6 @@ goatFitness = 0; %goat = greatest of all time
 fData = LoadFunctionData();
 generation = 0;
 placeCondition = true;
-%Insert the best individual ever found into population
-population(1).Chromosome = bestChromosomee;
 
 while goatFitness < 120
     generation = generation + 1;
@@ -79,6 +73,13 @@ while goatFitness < 120
     population = NextGeneration(population, fitnessList, tournamentProbability, ...
         tournamentSize, nVariableRegisters, nConstantRegisters, operatorSet, ...
         crossoverProbability, mutationNumber,eliteIndividual);
+    
+    %Place all time best individual from all runs into population
+    if placeCondition == true
+        
+        population(1).Chromosome = bestChromosomee;
+        placeCondition = false;
+    end
 end
 
 

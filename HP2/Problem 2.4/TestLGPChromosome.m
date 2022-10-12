@@ -1,8 +1,11 @@
+%Maximilian Salén
+%19970105-1576
+%Last updated: 2022-10-12
 clear all
 clc
-%Load best chromosome from BestChromsome.m
-BestChromosome
 
+%Load best chromosome from BestChromsome.m
+BestChromosome6
 %Parameters and initaliation
 nVariableRegisters = 5; % number of variable registers
 variableRegisters = zeros(1,nVariableRegisters);
@@ -17,7 +20,7 @@ fData = LoadFunctionData;
 nDataPoints = height(fData);
 yEstimates = zeros(nDataPoints,1);
 
-estimatedFunction = CalculateEstimatedFunction(bestChromosome,operatorSet,registers);
+
 
 for k = 1:nDataPoints
     registers(1) = fData(k,1);
@@ -34,7 +37,12 @@ error = 1/fitness;
 
 
 
+<<<<<<< HEAD
 fprintf('Error %.4f\n',error)
+estimatedFunction = CalculateEstimatedFunction(bestChromosome,operatorSet,registers);
+=======
+fprintf('Error %0.4f\n',error)
+>>>>>>> 044015c7b181ca2bbf0157c0123bc609a30b1e2b
 estimatedFunction
 
 
@@ -43,6 +51,6 @@ hold on
 plot(fData(:,1),fData(:,2),'r')
 plot(fData(:,1),yEstimates(:),'b')
 title('Comparison of LGP estimated values and data series from original function')
-legend('Original function values','LGP-estimated values')
+legend('Original function values','LGP-estimated values','Location','NorthWest')
 xlabel('$$x$$','Interpreter','latex')
 ylabel('$$y_{k}$$', 'Interpreter', 'Latex')
