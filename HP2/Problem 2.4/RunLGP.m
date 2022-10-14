@@ -3,30 +3,26 @@
 %Last updated: 2022-10-11
 clear all
 clc
-BestChromosomee
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Parameter specifications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 populationSize = 200;
-nVariableRegisters = 5; % number of variable registers
+nVariableRegisters = 7; % number of variable registers
 variableRegisters = zeros(1,nVariableRegisters);
-constantRegisters = [1 3 -1 -5 10];
-pentaltyThresholdLength = 4*135;
-penaltyFactor = 0.9;
-cMax = 1e15;
+constantRegisters = [1 3 -1];
+pentaltyThresholdLength = 4*50;
+penaltyExponent = 2;
+cMax = 1e6;
 nConstantRegisters = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
-<<<<<<< HEAD
-instructionRange  = [10 90];
-=======
-instructionRange  = [10 110];
->>>>>>> 044015c7b181ca2bbf0157c0123bc609a30b1e2b
+instructionRange  = [10 35];
 
 tournamentSize = 6;
 tournamentProbability = 0.8;
 crossoverProbability = 0.2;
 mutationNumber = 3;
-mutationDecayRate = 0.99995;
+mutationDecayRate = 0.9999;
 numberOfGenerations = 20000;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,9 +35,6 @@ goatIndividual = struct('Chromosome', []);
 goatFitness = 0; %goat = greatest of all time
 fData = LoadFunctionData();
 generation = 0;
-placeCondition = true;
-%Insert the best individual ever found into population
-population(1).Chromosome = bestChromosomee;
 
 while goatFitness < 120
     generation = generation + 1;
@@ -53,7 +46,7 @@ while goatFitness < 120
     for i = 1:populationSize
         chromosome = population(i).Chromosome;
         fitnessList(i) = EvaluateIndividual(chromosome,fData,operatorSet, ...
-            registers,nVariableRegisters,pentaltyThresholdLength,penaltyFactor,cMax);
+            registers,nVariableRegisters,pentaltyThresholdLength,penaltyExponent,cMax);
 
         % Save the elite of this generation
         if eliteFitness < fitnessList(i)
@@ -79,6 +72,7 @@ while goatFitness < 120
     population = NextGeneration(population, fitnessList, tournamentProbability, ...
         tournamentSize, nVariableRegisters, nConstantRegisters, operatorSet, ...
         crossoverProbability, mutationNumber,eliteIndividual);
+
 end
 
 

@@ -1,9 +1,7 @@
 function fitness = EvaluateIndividual(chromosome,fData,operatorSet,registers, ...
-    nVariableRegisters,pentaltyThresholdLength, penaltyFactor,cMax)
+    nVariableRegisters,pentaltyThresholdLength,penaltyExponent,cMax)
     nGenes = length(chromosome);
-    maxLengthChromosome = 4*140;
-    b = 2;
-    penaltyFactor = (maxLengthChromosome/nGenes)^b;
+    penaltyFactor = (pentaltyThresholdLength/nGenes)^penaltyExponent;
     K = height(fData);
     errorSum = 0;
     for k = 1:K

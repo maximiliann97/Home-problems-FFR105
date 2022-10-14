@@ -12,6 +12,7 @@ function nextNode = GetNode(tabuList,pheromoneLevel,visibility,alpha,beta,starti
         end
         probabilitySum = probabilitySum + probability;
         
+        %Roulette wheel selectionish
         if probabilitySum > r
            nextNode = i;
            break

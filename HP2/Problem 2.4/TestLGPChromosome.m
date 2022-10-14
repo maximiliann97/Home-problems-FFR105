@@ -3,23 +3,24 @@
 %Last updated: 2022-10-12
 clear all
 clc
+clf
 
 %Load best chromosome from BestChromsome.m
-BestChromosome6
+BestChromosome
+
 %Parameters and initaliation
-nVariableRegisters = 5; % number of variable registers
+nVariableRegisters = 7; % number of variable registers
 variableRegisters = zeros(1,nVariableRegisters);
-constantRegisters = [1 3 -1 -5 10];
+constantRegisters = [1 3 -1];
 registers = [variableRegisters constantRegisters];
 nConstantRegisters = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
-pentaltyThresholdLength = 4*120;
-penaltyFactor = 0.9;
-cMax = 1e15;
+pentaltyThresholdLength = length(bestChromosome); %No penalty needed when comparing to the actual function
+penaltyExponent = 2;
+cMax = 1e6;
 fData = LoadFunctionData;
 nDataPoints = height(fData);
 yEstimates = zeros(nDataPoints,1);
-
 
 
 for k = 1:nDataPoints
@@ -32,24 +33,19 @@ for k = 1:nDataPoints
     yEstimate = output(1);
     yEstimates(k) = yEstimate;
 end
-fitness = EvaluateIndividual(bestChromosome,fData,operatorSet,registers,nVariableRegisters,pentaltyThresholdLength,penaltyFactor,cMax);
+fitness = EvaluateIndividual(bestChromosome,fData,operatorSet,registers,nVariableRegisters,pentaltyThresholdLength,penaltyExponent,cMax);
 error = 1/fitness;
 
 
 
-<<<<<<< HEAD
-fprintf('Error %.4f\n',error)
-estimatedFunction = CalculateEstimatedFunction(bestChromosome,operatorSet,registers);
-=======
-fprintf('Error %0.4f\n',error)
->>>>>>> 044015c7b181ca2bbf0157c0123bc609a30b1e2b
-estimatedFunction
+fprintf('Error %d\n',error)
+estimatedFunction = CalculateEstimatedFunction(bestChromosome,operatorSet,registers,nVariableRegisters)
 
 
 figure(1)
 hold on
 plot(fData(:,1),fData(:,2),'r')
-plot(fData(:,1),yEstimates(:),'b')
+plot(fData(:,1),yEstimates(:),'bo')
 title('Comparison of LGP estimated values and data series from original function')
 legend('Original function values','LGP-estimated values','Location','NorthWest')
 xlabel('$$x$$','Interpreter','latex')
