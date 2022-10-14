@@ -1,8 +1,9 @@
-function estimatedFunction = CalculateEstimatedFunction(individual, operatorSet, registers,nVariableRegisters)
+function estimatedFunction = CalculateEstimatedFunction(individual, operatorSet, registers)
     nGenes = length(individual);
+
     syms x
     symRegisters = subs(registers,registers(1),x);
-    symRegisters(2:nVariableRegisters) = 0;
+    symRegisters(2:5) = 0;
     
     for i = 1:4:nGenes
         operator = operatorSet(individual(i));

@@ -8,6 +8,7 @@ clear all;
 clc;
 clf;
 
+addpath ./TSPgraphics
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Data
