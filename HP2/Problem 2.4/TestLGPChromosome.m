@@ -38,7 +38,7 @@ error = 1/fitness;
 
 
 
-fprintf('Error %d\n',error)
+fprintf('Fitness value %d\nError %d\n',fitness,error)
 estimatedFunction = CalculateEstimatedFunction(bestChromosome,operatorSet,registers,nVariableRegisters)
 
 
