@@ -8,21 +8,21 @@ clc
 % Parameter specifications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 populationSize = 200;
-nVariableRegisters = 5; % number of variable registers
+nVariableRegisters = 7; % number of variable registers
 variableRegisters = zeros(1,nVariableRegisters);
-constantRegisters = [1 3 -1 -5 10];
-pentaltyThresholdLength = 4*200;
-penaltyFactor = 0.9;
-cMax = 1e15;
+constantRegisters = [1 3 -1];
+pentaltyThresholdLength = 4*50;
+penaltyExponent = 2;
+cMax = 1e6;
 nConstantRegisters = length(constantRegisters); % number of constant registers
 operatorSet = ['+','-','*','/'];
-instructionRange  = [10 110];
+instructionRange  = [10 35];
 
 tournamentSize = 6;
 tournamentProbability = 0.8;
 crossoverProbability = 0.2;
 mutationNumber = 3;
-mutationDecayRate = 0.99995;
+mutationDecayRate = 0.9999;
 numberOfGenerations = 20000;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +36,7 @@ goatFitness = 0; %goat = greatest of all time
 fData = LoadFunctionData();
 generation = 0;
 
-while goatFitness < 100
+while goatFitness < 120
     generation = generation + 1;
     fitnessList = zeros(1, populationSize);
     eliteFitness  = 0;
@@ -46,7 +46,7 @@ while goatFitness < 100
     for i = 1:populationSize
         chromosome = population(i).Chromosome;
         fitnessList(i) = EvaluateIndividual(chromosome,fData,operatorSet, ...
-            registers,nVariableRegisters,pentaltyThresholdLength,penaltyFactor,cMax);
+            registers,nVariableRegisters,pentaltyThresholdLength,penaltyExponent,cMax);
 
         % Save the elite of this generation
         if eliteFitness < fitnessList(i)
@@ -66,6 +66,7 @@ while goatFitness < 100
 
     end
     
+
     %Form the next generation
     mutationNumber = mutationNumber*mutationDecayRate;
     population = NextGeneration(population, fitnessList, tournamentProbability, ...

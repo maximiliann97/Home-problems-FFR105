@@ -1,8 +1,8 @@
 function newPopulation = NextGeneration(population, fitnessList, tournamentProbability, tournamentSize, nVariableRegisters, nConstantRegisters, ...
     operatorSet,crossoverProbability, mutationConstant, eliteIndividual)
     populationSize = size(population,2);
-    %newPopulation = [];
     temporaryPopulation = population;
+
     % Select two individual for tournament selection
     for i = 1:2:populationSize
         i1 = TournamentSelection(fitnessList,tournamentProbability,tournamentSize);
@@ -21,7 +21,8 @@ function newPopulation = NextGeneration(population, fitnessList, tournamentProba
              temporaryPopulation(i+1).Chromosome = parent2;
         end
     end 
-
+    
+    % Place elite individual first in next generation
     temporaryPopulation(1).Chromosome = eliteIndividual;
     for i = 2:populationSize
         tempIndividual = Mutate(temporaryPopulation(i).Chromosome,mutationConstant,operatorSet,nVariableRegisters,nConstantRegisters);
