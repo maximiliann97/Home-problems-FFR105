@@ -24,7 +24,7 @@ swarmSize = 35;
 
 c1 = 2;
 c2 = 2;
-wMax = 1.4;
+w = 1.4;
 beta = 0.98;
 wMin = 0.4;
 deltaT = 1;
@@ -81,17 +81,17 @@ for k=1:maxIterations
     % Update velocity and position
     r = rand(swarmSize,1);
     q = rand(swarmSize,1);
-    velocities = wMax.*velocities + c1*q.*(bestPosition-coordinates) + c2*r.*(bestPerformance-coordinates);
+    velocities = w.*velocities + c1*q.*(bestPosition-coordinates) + c2*r.*(bestPerformance-coordinates);
     velocities(velocities>vMax) = vMax;
     velocities(velocities<-vMax) = -vMax;
     
     coordinates = position + velocities;
-    wMax = wMax*beta;
+    w = w*beta;
     
     
     %Set minimum inertia
-    if wMax < wMin
-        wMax = wMin;
+    if w < wMin
+        w = wMin;
     end
 
 
